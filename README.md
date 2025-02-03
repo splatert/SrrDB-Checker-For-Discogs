@@ -10,3 +10,4 @@ Install with a userscript manager of your choice.
 
 ## Usage
 Take a look at a release that's on Discogs. A section should appear under the Discogs release tracklist which will display scene release titles from SrrDB.
+You can read more about a scene release by clicking on their titles which will take you to their page on SrrDB.
