@@ -91,7 +91,7 @@ function createSrrDBSection() {
                 <tr>
                     <th style="text-align: left;">Release</th>
                     <th>Size</th>
-                    <th>Release Date</th>
+                    <th>Uploaded</th>
                     <th style="width: 50px;">NFO?</th>
                     <th style="width: 50px;">SRS?</th>
                 </tr>
