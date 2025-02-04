@@ -1,7 +1,8 @@
 # SrrDB-Checker-For-Discogs
 Userscript to fetch available SrrDB releases for Discogs music.
+Works on both release and master pages.
 
-<img src="https://github.com/user-attachments/assets/f102ed2a-3f60-44bc-8d1b-133ca275d048">
+<img src="https://github.com/user-attachments/assets/164f702f-6540-4563-aa5e-3dda3b50d528">
 
 ## Installation
 
