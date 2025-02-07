@@ -203,12 +203,27 @@ function getQuery() {
         query = query.toLowerCase();
         query = query.replace(/[^a-zA-Z0-9 ]/g, '')
 
-        if (query.includes(' featuring')) {
-            query = query.replace(' featuring', '');
+        
+        
+        var artistWordsToDel = [' featuring', ' feat'];
+
+        // remove featuring, feat, or any keyword that might limit amount of results.
+        for (let i=0; i<artistWordsToDel.length; i++) {
+            if (query.includes(artistWordsToDel[i])) {
+                query = query.replace(artistWordsToDel[i], '');
+            }
         }
+
+        // having "various" (ie "various artists") as an artist name can limit amount of srrdb results. Remove it.
+        if (query.startsWith('various')) {
+            query = query.substring('various'.length);
+        }
+        
+
 
     }
 
+    console.log(query);
     return query;
 }
 
