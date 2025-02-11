@@ -13,11 +13,29 @@
 
 var relTrackList = 'release-tracklist';
 var titleElement = 'title_1q3xW';
+var entries = [];
+
+
+
+function clearSceneList(deleteJSONEntries) {
+
+    var sceneItems = document.getElementsByClassName('scene-item');
+    for (let i=sceneItems.length; i--;) {
+        sceneItems[i].remove();
+    }
+
+    if (deleteJSONEntries) {
+        entries = [];
+    }
+    
+}
+
 
 
 
 function createSceneEntry(rel_name, size, date, nfo, srs) {
     var entry = document.createElement('tr');
+    entry.className = 'scene-item';
     entry.style.textAlign = 'center';
 
     var tdRelName = document.createElement('td');
@@ -29,7 +47,7 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
 
     if (rel_name) {
         tdRelName.style.textAlign = 'left';
-        tdRelName.innerHTML = '<a href="https://www.srrdb.com/release/details/'+rel_name+'">'+rel_name+'</a>';
+        tdRelName.innerHTML = '<a class="lnk" href="https://www.srrdb.com/release/details/'+rel_name+'">'+rel_name+'</a>';
     }
     if (size) {
         var mb = (size / (1024*1024)).toFixed(2);
@@ -91,13 +109,25 @@ function createSrrDBSection() {
             </div>
 
             <table id="sceneRels" style="display: none;">
+
+                <style>.lnk {color: #2653d9 !important}</style>
+
                 <tbody id="sceneRelItems">
                 <tr>
-                    <th style="text-align: left;">Release</th>
-                    <th>Size</th>
-                    <th>Uploaded</th>
-                    <th style="width: 50px;">NFO?</th>
-                    <th style="width: 50px;">SRS?</th>
+                    <th style="text-align: left;">
+                    Release</th>
+                    <th>Size
+                        <a id="srrdb-bysize" class="lnk" href="#">↕</a>
+                    </th>
+                    <th>Uploaded
+                        <a id="srrdb-bydate" class="lnk" href="#">↕</a>
+                    </th>
+                    <th style="width: 50px;">NFO?
+                        <a id="srrdb-bynfo" class="lnk" href="#">↕</a>
+                    </th>
+                    <th style="width: 50px;">SRS?
+                        <a id="srrdb-bysrs" class="lnk" href="#">↕</a>
+                    </th>
                 </tr>
                 </tbody>
             </table>
@@ -106,63 +136,105 @@ function createSrrDBSection() {
 
         sceneReleaseList.style = 'margin-bottom: 15px;';
         domRelTrackList.parentElement.appendChild(sceneReleaseList);
+
+        var sortbyDate = document.getElementById('srrdb-bydate');
+        var sortbySize = document.getElementById('srrdb-bysize');
+        var sortbyNFO = document.getElementById('srrdb-bynfo');
+        var sortbySRS = document.getElementById('srrdb-bysrs');
+        
+        var sortbyDateDesc = false;
+        var sortbySizeDesc = false;
+        var sortbyNFODesc = false;
+        var sortbySRSDesc = false;
+
+        sortbyDate.addEventListener('click', function(){
+            
+            if (!sortbyDateDesc) {
+                sortbyDateDesc = true
+                entries.sort(function (b, a) {
+                    return a['date'].localeCompare(b['date']);
+                });
+            }
+            else {
+                sortbyDateDesc = false;
+                entries.sort(function (a, b) {
+                    return a['date'].localeCompare(b['date']);
+                });
+            }
+
+            clearSceneList(false);
+            drawSceneItems();
+        })
+
+        sortbySize.addEventListener('click', function(){
+            
+            if (!sortbySizeDesc) {
+                sortbySizeDesc = true
+                entries.sort(function (a, b) {
+                    return b['size'] - a['size'];
+                });
+            }
+            else {
+                sortbySizeDesc = false;
+                entries.sort(function (a, b) {
+                    return a['size'] - b['size'];
+                });
+            }
+
+            clearSceneList(false);
+            drawSceneItems();
+        })
+
+        sortbyNFO.addEventListener('click', function(){
+            
+            if (!sortbyNFODesc) {
+                sortbyNFODesc = true
+                entries.sort(function (a, b) {
+                    return Number(b['hasNFO']) - Number(a['hasNFO']);
+                });
+            }
+            else {
+                sortbyNFODesc = false;
+                entries.sort(function (a, b) {
+                    return Number(a['hasNFO']) - Number(b['hasNFO']);
+                });
+            }
+
+            clearSceneList(false);
+            drawSceneItems();
+        })
+
+        sortbySRS.addEventListener('click', function(){
+            
+            if (!sortbySRSDesc) {
+                sortbySRSDesc = true
+                entries.sort(function (a, b) {
+                    return Number(b['hasSRS']) - Number(a['hasSRS']);
+                });
+            }
+            else {
+                sortbySRSDesc = false;
+                entries.sort(function (a, b) {
+                    return Number(a['hasSRS']) - Number(b['hasSRS']);
+                });
+            }
+
+            clearSceneList(false);
+            drawSceneItems();
+        })
+
     }
 }
 
 
 
+function drawSceneItems() {
 
-function displaySceneResponse(json) {
-    
-    var title, date = '';
-    var size = 0;
-    var nfo, srs = false;
+    var numItems = entries.length;
 
-    var numItems = 0
-
-
-    for (entry in json['results']) {
-        if (json['results'][entry]['release']) {
-            title = json['results'][entry]['release'];
-        }
-        else {
-            title = 'Untitled';
-        }
-
-        if (json['results'][entry]['size']) {
-            size = json['results'][entry]['size'];
-        }
-        else {
-            size = 0;
-        }
-
-        if (json['results'][entry]['date']) {
-            date = json['results'][entry]['date'];
-        }
-        else {
-            date = ''
-        }
-
-        if (json['results'][entry]['hasNFO'] != null) {
-            if (json['results'][entry]['hasNFO'] == 'yes') {
-                nfo = true;
-            }
-            else {
-                nfo = false;
-            }
-        }
-        if (json['results'][entry]['hasSRS'] != null) {
-            if (json['results'][entry]['hasSRS'] == 'yes') {
-                srs = true;
-            }
-            else {
-                srs = false;
-            }
-        }
-        var entryItemElement = createSceneEntry(title, size, date, nfo, srs);
+    for (let i=0; i<entries.length; i++) {
+        var entryItemElement = createSceneEntry(entries[i]['release'], entries[i]['size'], entries[i]['date'], entries[i]['hasNFO'], entries[i]['hasSRS']);
         document.getElementById('sceneRelItems').appendChild(entryItemElement);
-
-        numItems += 1;
     }
 
     document.getElementById('loadingForRels').firstElementChild.style.display = 'none';
@@ -181,6 +253,55 @@ function displaySceneResponse(json) {
 
 
 
+function adjustJson(json) {
+
+    clearSceneList(true);
+
+    for (entry in json['results']) {
+        if (!json['results'][entry]['release']) {
+            json['results'][entry]['release'] = 'Untitled';
+        }
+
+        if (!json['results'][entry]['size']) {
+            size = 0;
+        }
+        if (!json['results'][entry]['date']) {
+            json['results'][entry]['date'] = ''
+        }
+
+        if (json['results'][entry]['hasNFO'] != null) {
+            if (json['results'][entry]['hasNFO'] == 'yes') {
+                json['results'][entry]['hasNFO'] = true;
+            }
+            else {
+                json['results'][entry]['hasNFO'] = false;
+            }
+        }
+        else {
+            json['results'][entry]['hasNFO'] = false;
+        }
+
+        if (json['results'][entry]['hasSRS'] != null) {
+            if (json['results'][entry]['hasSRS'] == 'yes') {
+                json['results'][entry]['hasSRS'] = true;
+            }
+            else {
+                json['results'][entry]['hasSRS'] = false;
+            }
+        }
+        else {
+            json['results'][entry]['hasSRS'] = false;
+        }
+
+        entries[entries.length] = json['results'][entry];
+    }
+
+    
+    drawSceneItems();
+}
+
+
+
 
 async function requestSceneReleases(query) {
 
@@ -194,7 +315,7 @@ async function requestSceneReleases(query) {
 
         fetch(requestURL)
         .then(res => res.json())
-        .then(out => displaySceneResponse(out));
+        .then(out => adjustJson(out));
 
     }
 }
