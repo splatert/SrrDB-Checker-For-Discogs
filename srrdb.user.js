@@ -117,16 +117,16 @@ function createSrrDBSection() {
                     <th style="text-align: left;">
                     Release</th>
                     <th>Size
-                        <a id="srrdb-bysize" class="lnk" href="#">↕</a>
+                        <a id="srrdb-bysize" class="lnk" href="#/">↕</a>
                     </th>
                     <th>Uploaded
-                        <a id="srrdb-bydate" class="lnk" href="#">↕</a>
+                        <a id="srrdb-bydate" class="lnk" href="#/">↕</a>
                     </th>
                     <th style="width: 50px;">NFO?
-                        <a id="srrdb-bynfo" class="lnk" href="#">↕</a>
+                        <a id="srrdb-bynfo" class="lnk" href="#/">↕</a>
                     </th>
                     <th style="width: 50px;">SRS?
-                        <a id="srrdb-bysrs" class="lnk" href="#">↕</a>
+                        <a id="srrdb-bysrs" class="lnk" href="#/">↕</a>
                     </th>
                 </tr>
                 </tbody>
