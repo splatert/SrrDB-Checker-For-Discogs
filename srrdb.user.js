@@ -134,8 +134,36 @@ function createSrrDBSection() {
 
         `;
 
-        sceneReleaseList.style = 'margin-bottom: 15px;';
+        sceneReleaseList.style = 'overflow-y: scroll; max-height: 275px; border-bottom: 1px solid #e5e5e5;';
         domRelTrackList.parentElement.appendChild(sceneReleaseList);
+        domRelTrackList.parentElement.style.marginBottom = '15px';
+
+
+        var expandSceneRelList = document.createElement('a');
+        expandSceneRelList.innerText = 'View All';
+        expandSceneRelList.className = 'lnk';
+        expandSceneRelList.id = 'expandSceneRels';
+        expandSceneRelList.href = '#/';
+        sceneReleaseList.parentElement.appendChild(expandSceneRelList);
+
+
+        var expanded = false;
+        expandSceneRelList.addEventListener('click', function(){
+            if (!expanded) {
+                sceneReleaseList.style.maxHeight = 'unset';
+                expanded = true;
+                this.innerText = 'Collapse';
+            }
+            else {
+                sceneReleaseList.style.maxHeight = '275px';
+                sectionTitle.scrollIntoView({
+                    behavior: 'smooth'
+                });
+                expanded = false;
+                this.innerText = 'View All';
+            }
+        })
+
 
         var sortbyDate = document.getElementById('srrdb-bydate');
         var sortbySize = document.getElementById('srrdb-bysize');
