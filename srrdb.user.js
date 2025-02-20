@@ -12,7 +12,7 @@
 
 
 var relTrackList = 'release-tracklist';
-var titleElement = 'title_1q3xW';
+var titleElement = 'title_Brnd1';
 var entries = [];
 
 
