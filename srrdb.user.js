@@ -89,6 +89,7 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
 
 
 function createSrrDBSection() {
+    console.log('drawing scene release table under tracklist...');
     var domRelTrackList = document.getElementById(relTrackList);
     if (domRelTrackList) {
 
@@ -262,12 +263,17 @@ function drawSceneItems() {
 
     for (let i=0; i<entries.length; i++) {
         var entryItemElement = createSceneEntry(entries[i]['release'], entries[i]['size'], entries[i]['date'], entries[i]['hasNFO'], entries[i]['hasSRS']);
-        document.getElementById('sceneRelItems').appendChild(entryItemElement);
+        var domRelItems = document.getElementById('sceneRelItems');
+        if (domRelItems) {
+            domRelItems.appendChild(entryItemElement);
+        }
     }
 
     document.getElementById('loadingForRels').firstElementChild.style.display = 'none';
 
     if (numItems > 0) {
+        console.log('drawing '+numItems+' scene release items...');
+        
         document.getElementById('loadingForRels').style.display = 'none';
         document.getElementById('sceneRels').style.display = 'table';
         document.getElementById('sceneRelCount').style.display = 'block';
@@ -387,11 +393,14 @@ function getQuery() {
 
 
 (function() {
-    createSrrDBSection();
+    
+    setTimeout(() => {
+        createSrrDBSection();
 
-    var query = getQuery();
-    if (query) {
-        requestSceneReleases(query);
-    }
+        var query = getQuery();
+        if (query) {
+            requestSceneReleases(query);
+        }
+    }, 2000);
     
 })();
