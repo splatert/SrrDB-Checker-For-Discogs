@@ -37,6 +37,7 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
     var entry = document.createElement('tr');
     entry.className = 'scene-item';
     entry.style.textAlign = 'center';
+    entry.style.verticalAlign = 'middle';
 
     var tdRelName = document.createElement('td');
     var tdsize = document.createElement('td');
@@ -50,10 +51,11 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
         tdRelName.innerHTML = '<a class="lnk" href="https://www.srrdb.com/release/details/'+rel_name+'">'+rel_name+'</a>';
     }
     if (size) {
-        var mb = (size / (1024*1024)).toFixed(2);
-        tdsize.innerText = mb.toString() + ' MB';
+        var mb = (size / (1024*1024)).toFixed(1);
+        tdsize.innerText = mb.toString() + 'MB';
     }
     if (date) {
+        date = date.replace(/ (.*)/gm, '');
         tddate.innerText = date;
     }
     if (nfo != null) {
