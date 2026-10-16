@@ -38,12 +38,14 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
     entry.className = 'scene-item';
     entry.style.textAlign = 'center';
     entry.style.verticalAlign = 'middle';
+    entry.innerHTML = '<style>.scene-item > td { padding: 0 !important;padding-top: 2px !important;padding-bottom: 2px !important; }</style>';
 
     var tdRelName = document.createElement('td');
     var tdsize = document.createElement('td');
     var tddate = document.createElement('td');
     var tdHasNfo = document.createElement('td');
     var tdHasSrs = document.createElement('td');
+    var tdSearch = document.createElement('td');
 
 
     if (rel_name) {
@@ -79,11 +81,21 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
         }
     }
 
+    if (rel_name) {
+        
+        tdSearch.innerHTML = '<a target="_blank" href="https://www.google.com/search?q=&#34'+rel_name+'&#34"><svg xmlns="http://w3.org" viewBox="0 0 16 16" width="16" height="16"><path fill="#4285F4" d="M15.68 8.18c0-.57-.05-1.12-.14-1.65H8v3.13h4.31c-.19 1-.75 1.84-1.59 2.41v2h2.58c1.51-1.39 2.38-3.44 2.38-5.89z"/><path fill="#34A853" d="M8 16c2.16 0 3.97-.72 5.3-1.94l-2.58-2c-.72.48-1.64.77-2.72.77-2.09 0-3.86-1.41-4.49-3.3H.84v2.07C2.16 14.23 4.88 16 8 16z"/><path fill="#FBBC05" d="M3.51 9.53A4.8 4.8 0 0 1 3.25 8c0-.53.09-1.05.26-1.53V4.4H.84A7.97 7.97 0 0 0 0 8c0 1.29.31 2.52.84 3.6l2.67-2.07z"/><path fill="#EA4335" d="M8 3.18c1.18 0 2.23.41 3.06 1.2l2.3-2.3C11.96.77 10.15 0 8 0 4.88 0 2.16 1.77.84 4.4l2.67 2.07C4.14 4.59 5.91 3.18 8 3.18z"/></svg></a><a target="_blank" style="margin-left: 4px;" href="https://www.yandex.com/search?text=&#34'+rel_name+'&#34"><svg xmlns="http://w3.org" viewBox="0 0 16 16" width="16" height="16"><rect rx="1.5" fill="#F8604A" height="16" width="16"></rect><path d="M4 3h1.8l2.2 4.6L10.2 3H12l-3.2 6.5v3.5H7.2V9.5z" fill="#FFFFFF"></path></svg></a>';
+
+        
+
+    }
+
     entry.appendChild(tdRelName);
     entry.appendChild(tdsize);
     entry.appendChild(tddate);
     entry.appendChild(tdHasNfo);
     entry.appendChild(tdHasSrs);
+    entry.appendChild(tdSearch);
+
 
     return entry;
 }
@@ -130,6 +142,8 @@ function createSrrDBSection() {
                     </th>
                     <th style="width: 50px;">SRS?
                         <a id="srrdb-bysrs" class="lnk" href="#/">↕</a>
+                    </th>
+                    <th style="width: 50px;"><svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.545 15.467l-3.779-3.779a6.15 6.15 0 0 0 .898-3.21c0-3.417-2.961-6.377-6.378-6.377A6.185 6.185 0 0 0 2.1 8.287c0 3.416 2.961 6.377 6.377 6.377a6.15 6.15 0 0 0 3.115-.844l3.799 3.801a.953.953 0 0 0 1.346 0l.943-.943c.371-.371.236-.84-.135-1.211zM4.004 8.287a4.282 4.282 0 0 1 4.282-4.283c2.366 0 4.474 2.107 4.474 4.474a4.284 4.284 0 0 1-4.283 4.283c-2.366-.001-4.473-2.109-4.473-4.474z"/></svg>
                     </th>
                 </tr>
                 </tbody>
