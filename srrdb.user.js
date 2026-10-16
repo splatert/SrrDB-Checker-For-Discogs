@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SrrDB Checker For Discogs
 // @namespace    http://tampermonkey.net/
-// @version      2026-09-09
+// @version      2025-02-02
 // @description  Fetches available SrrDB releases for discogs music.
 // @author       splatert
 // @match        https://www.discogs.com/release/*
@@ -363,7 +363,7 @@ function getQuery() {
     if (titleDom) {
         query = titleDom.innerText;
         query = query.toLowerCase();
-        query = query.replace(/[^a-zA-Z0-9_ ]/g, '')
+        query = query.replace(/[^a-zA-Z0-9_\- ]/g, '')
 
 
 
