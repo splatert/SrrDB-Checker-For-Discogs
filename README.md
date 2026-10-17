@@ -2,7 +2,7 @@
 Userscript to fetch available SrrDB releases for Discogs music.
 Works on both release and master pages.
 
-<img src="https://github.com/user-attachments/assets/164f702f-6540-4563-aa5e-3dda3b50d528">
+<img src="https://github.com/user-attachments/assets/849ace73-a42d-4b36-8c9b-838721a052ce">
 
 ## Installation
 
