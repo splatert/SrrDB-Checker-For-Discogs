@@ -38,7 +38,7 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
     entry.className = 'scene-item';
     entry.style.textAlign = 'center';
     entry.style.verticalAlign = 'middle';
-    entry.innerHTML = '<style>.scene-item > td { padding: 0 !important;padding-top: 2px !important;padding-bottom: 2px !important; }</style>';
+    entry.innerHTML = '<style>.scene-item > td {border-right: 1px solid #e5e5e5; padding: 0 !important;padding-top: 2px !important;padding-bottom: 2px !important; overflow: hidden;text-overflow: ellipsis;white-space: nowrap;} </style>';
 
     var tdRelName = document.createElement('td');
     var tdsize = document.createElement('td');
@@ -46,12 +46,19 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
     var tdHasNfo = document.createElement('td');
     var tdHasSrs = document.createElement('td');
     var tdSearch = document.createElement('td');
+    var tdScene = document.createElement('td');
 
 
     if (rel_name) {
         tdRelName.style.textAlign = 'left';
         tdRelName.innerHTML = '<a class="lnk" href="https://www.srrdb.com/release/details/'+rel_name+'">'+rel_name+'</a>';
     }
+
+    if (rel_name) {
+        var sceneName = rel_name.replace(/^(.*)-/gm, '');
+        tdScene.innerText = sceneName;
+    }
+
     if (size) {
         var mb = (size / (1024*1024)).toFixed(1);
         tdsize.innerText = mb.toString() + 'MB';
@@ -89,12 +96,10 @@ function createSceneEntry(rel_name, size, date, nfo, srs) {
 
     }
 
-    entry.appendChild(tdRelName);
-    entry.appendChild(tdsize);
-    entry.appendChild(tddate);
-    entry.appendChild(tdHasNfo);
-    entry.appendChild(tdHasSrs);
-    entry.appendChild(tdSearch);
+    var elementsToAppend = [tdRelName, tdScene, tdsize, tddate, tdHasNfo, tdHasSrs, tdSearch];
+    elementsToAppend.forEach(e => {
+        entry.appendChild(e);
+    });
 
 
     return entry;
@@ -123,25 +128,24 @@ function createSrrDBSection() {
                 <span>Looking for releases...</span>
             </div>
 
-            <table id="sceneRels" style="display: none;">
+            <table id="sceneRels" style="display: none; table-layout: fixed !important;">
 
                 <style>.lnk {color: #2653d9 !important}</style>
 
                 <tbody id="sceneRelItems">
                 <tr>
-                    <th style="text-align: left;">
+                    <th style="text-align: left; width: 25vw;">
                     Release</th>
-                    <th>Size
+                    <th style="width: 56px;">Scene</th>
+                    <th style="width: 75px;">Size
                         <a id="srrdb-bysize" class="lnk" href="#/">↕</a>
                     </th>
-                    <th>Uploaded
+                    <th style="width: 75px;">Uploaded
                         <a id="srrdb-bydate" class="lnk" href="#/">↕</a>
                     </th>
-                    <th style="width: 50px;">NFO?
-                        <a id="srrdb-bynfo" class="lnk" href="#/">↕</a>
+                    <th style="width: 30px;">NFO<a id="srrdb-bynfo" class="lnk" href="#/">↕</a>
                     </th>
-                    <th style="width: 50px;">SRS?
-                        <a id="srrdb-bysrs" class="lnk" href="#/">↕</a>
+                    <th style="width: 30px;">SRS<a id="srrdb-bysrs" class="lnk" href="#/">↕</a>
                     </th>
                     <th style="width: 50px;"><svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.545 15.467l-3.779-3.779a6.15 6.15 0 0 0 .898-3.21c0-3.417-2.961-6.377-6.378-6.377A6.185 6.185 0 0 0 2.1 8.287c0 3.416 2.961 6.377 6.377 6.377a6.15 6.15 0 0 0 3.115-.844l3.799 3.801a.953.953 0 0 0 1.346 0l.943-.943c.371-.371.236-.84-.135-1.211zM4.004 8.287a4.282 4.282 0 0 1 4.282-4.283c2.366 0 4.474 2.107 4.474 4.474a4.284 4.284 0 0 1-4.283 4.283c-2.366-.001-4.473-2.109-4.473-4.474z"/></svg>
                     </th>
