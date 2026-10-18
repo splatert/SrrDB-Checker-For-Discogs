@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SrrDB Checker For Discogs
 // @namespace    http://tampermonkey.net/
-// @version      2025-02-02
+// @version      2026-10-17
 // @description  Fetches available SrrDB releases for discogs music.
 // @author       splatert
 // @match        https://www.discogs.com/release/*
@@ -382,9 +382,10 @@ function getQuery() {
     var titleDom = document.getElementsByClassName(titleElement)[0];
     if (titleDom) {
         query = titleDom.innerText;
+        
         query = query.toLowerCase();
-        query = query.replace(/[^a-zA-Z0-9_\- ]/g, '')
-
+        query = query.normalize("NFD");
+        query = query.replace(/[^a-zA-Z0-9_\- ]/g, '');
 
 
         var disallowed = [' featuring', ' feat'];
