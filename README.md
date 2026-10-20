@@ -4,14 +4,19 @@ Works on both release and master pages.
 
 <img src="https://github.com/user-attachments/assets/849ace73-a42d-4b36-8c9b-838721a052ce">
 
-## Installation
 
-Install with a userscript manager of your choice.
+## Features
+- Instant results.
+- Ability to reverse search with Google or Yandex.
+- Can sort results by upload date, size, or whether release contains NFO & SRS files or not.
+
+
+## Installation
+Install Tampermonkey or a userscript manager of your choice. Then <a href="https://github.com/splatert/SrrDB-Checker-For-Discogs/raw/refs/heads/main/srrdb.user.js">click here to install this script</a>.
 
 
 ## Usage
-Take a look at a release that's on Discogs. A section should appear under the Discogs release tracklist which will display scene release titles from SrrDB.
-You can sort the results by date, size, NFO, and SRS.
+If you visit a release page, a section should appear under the Discogs release track list which will display scene release titles from SrrDB.
 You can also read more about a scene release by clicking on their titles which will take you to their page on SrrDB.
 
 
